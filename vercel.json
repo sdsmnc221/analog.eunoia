@@ -1,10 +1,4 @@
 {
-    "rewrites": [
-        {
-            "source": "/api/:path(.*)",
-            "destination": "https://api.notion.com/:path"
-        }
-    ],
     "headers": [
         {
             "source": "/api/(.*)",
@@ -24,6 +18,10 @@
                 {
                     "key": "Access-Control-Allow-Headers",
                     "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+                },
+                {
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
                 }
             ]
         }
