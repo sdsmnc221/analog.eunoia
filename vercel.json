@@ -1,61 +1,7 @@
 {
-    "rewrites": [
-        {
-            "source": "/notion-api",
-            "destination": "https://api.notion.com",
-            "has": [
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                },
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
-                },
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-                },
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-                }
-            ]
-        },
-        {
-            "source": "/notion-api/:path(.*)",
-            "destination": "https://api.notion.com/:path",
-            "has": [
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                },
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
-                },
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-                },
-                {
-                    "type": "header",
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-                }
-            ]
-        }
-    ],
     "headers": [
         {
-            "source": "/notion-api/(.*)",
+            "source": "/notion-api/:path(.*)",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",
