@@ -1,27 +1,17 @@
 {
     "rewrites": [
         {
-            "source": "/api",
+            "source": "/notion-api",
             "destination": "https://api.notion.com"
         },
         {
-            "source": "/api/:path(.*)",
-            "destination": "https://api.notion.com/:path"
-        }
-    ],
-    "redirects": [
-        {
-            "source": "/api",
-            "destination": "https://api.notion.com"
-        },
-        {
-            "source": "/api/:path(.*)",
+            "source": "/notion-api/:path(.*)",
             "destination": "https://api.notion.com/:path"
         }
     ],
     "headers": [
         {
-            "source": "/api/(.*)",
+            "source": "/notion-api/(.*)",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",
