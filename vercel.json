@@ -7,10 +7,16 @@
         {
             "source": "/api/:path(.*)",
             "destination": "https://api.notion.com/:path"
+        }
+    ],
+    "redirects": [
+        {
+            "source": "/api",
+            "destination": "https://api.notion.com"
         },
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "source": "/api/:path(.*)",
+            "destination": "https://api.notion.com/:path"
         }
     ],
     "headers": [
