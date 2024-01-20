@@ -11,12 +11,14 @@ app.all("/notion-api/*", async (req, res) => {
     const path = req.params[0];
     const url = `${apiEndpoint}/${path}`;
 
+    console.log(`API endpoint: ${url}`);
+
     const response = await fetch(url, {
       method: req.method,
       headers: {
         "Content-Type": "application/json",
         // Add any required headers for authentication or other purposes
-        Authorization: "Bearer " + process.env.NOTION_API_KEY,
+        Authorization: "Bearer " + import.meta.env.VITE_NOTION_API_KEY,
       },
       body: req.method !== "GET" ? JSON.stringify(req.body) : undefined,
     });
