@@ -19,6 +19,8 @@ app.all("/notion-api/*", async (req, res) => {
         "Content-Type": "application/json",
         // Add any required headers for authentication or other purposes
         Authorization: "Bearer " + import.meta.env.VITE_NOTION_API_KEY,
+        "Notion-Version": "2022-06-28",
+        "Content-Type": "application/json",
       },
       body: req.method !== "GET" ? JSON.stringify(req.body) : undefined,
     });
