@@ -1,7 +1,17 @@
 {
-    "headers": [
+    "rewrites": [
+        {
+            "source": "/api",
+            "destination": "https://api.notion.com"
+        },
         {
             "source": "/api/:path(.*)",
+            "destination": "https://api.notion.com/:path"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/api/(.*)",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",
