@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     proxy: {
-      "/api": {
+      "/notion-api": {
         target: "https://api.notion.com/",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/notion-api/, ""),
       },
     },
   },
