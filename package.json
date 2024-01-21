@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
+    "@vercel/node": "^3.0.17",
     "axios": "^1.6.5",
     "chart.js": "^4.4.1",
     "cors": "^2.8.5",
