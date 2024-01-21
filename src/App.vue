@@ -1,9 +1,7 @@
 <template>
-  <Suspense>
-    <main>
-      <Line id="mood-tracker-chart" :options="chartOptions" :data="chartData" />
-    </main>
-  </Suspense>
+  <main>
+    <Line id="mood-tracker-chart" :options="chartOptions" :data="chartData" />
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +9,7 @@ import "the-new-css-reset/css/reset.css";
 
 import axiosInstance from "./helpers/axiosInstance";
 
-import { Suspense, Ref, ref, watch } from "vue";
+import { Ref, ref, watch } from "vue";
 
 import {
   Chart as ChartJS,
@@ -94,10 +92,13 @@ if (res && res.data) {
   }));
 }
 
-watch(moods, () => {
-  chartData.value = computeChartData();
-  console.log(chartData.value);
-});
+watch(
+  () => moods.value,
+  () => {
+    chartData.value = computeChartData();
+    console.log(chartData.value);
+  }
+);
 </script>
 
 <style lang="scss"></style>
