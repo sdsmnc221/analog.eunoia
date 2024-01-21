@@ -28,7 +28,7 @@ import "the-new-css-reset/css/reset.css";
 
 import axiosInstance from "./helpers/axiosInstance";
 
-import { Ref, onMounted, ref, watch } from "vue";
+import { Ref, ref, watch } from "vue";
 
 import {
   Chart as ChartJS,
@@ -98,7 +98,7 @@ const computeChartData = (): iChartData => {
   };
 };
 
-const chartOptions = {
+const chartOptions: any = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
