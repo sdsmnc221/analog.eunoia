@@ -33,35 +33,46 @@ ChartJS.register(
   Legend
 );
 
-interface MoodTracker {
+interface iVizTracker {
   date: string;
-  value: number;
+  mood: number;
+  habit: number;
 }
 
-interface ChartData {
+interface iDataSet {
+  label: string;
+  data: number[];
+  backgroundColor?: string;
+  borderColor?: string;
+  fill?: boolean;
+  tension?: number;
+}
+
+interface iChartData {
   labels: string[];
-  datasets: {
-    label: string;
-    data: number[];
-    backgroundColor?: string;
-    borderColor?: string;
-    fill?: boolean;
-    tension?: number;
-  }[];
+  datasets: iDataSet[];
 }
 
-const moods: Ref<MoodTracker[]> = ref([]);
+const tracker: Ref<iVizTracker[]> = ref([]);
 
-const computeChartData = (): ChartData => {
+const computeChartData = (): iChartData => {
   return {
-    labels: moods.value.map((mood) => mood.date),
+    labels: tracker.value.map((mood) => mood.date),
     datasets: [
       {
         label: "Mood",
         backgroundColor: "#57cc99",
         borderColor: "#57cc99",
         fill: true,
-        data: moods.value.map((mood) => mood.value),
+        data: tracker.value.map((data) => data.mood),
+        tension: 0.32,
+      },
+      {
+        label: "Habit",
+        backgroundColor: "#9d4edd",
+        borderColor: "#9d4edd",
+        fill: true,
+        data: tracker.value.map((data) => data.habit),
         tension: 0.32,
       },
     ],
@@ -74,12 +85,12 @@ const chartOptions = {
   plugins: {
     title: {
       display: true,
-      text: "Mood Tracker Viz",
+      text: "Daily Tracker Viz",
     },
   },
 };
 
-const chartData: Ref<ChartData> = ref(computeChartData());
+const chartData: Ref<iChartData> = ref(computeChartData());
 
 axiosInstance
   .post(
@@ -95,15 +106,19 @@ axiosInstance
   )
   .then((res) => {
     if (res && res.data) {
-      moods.value = res.data.data.results.slice(-30).map((mood: any) => ({
-        date: mood.properties.Date.date.start,
-        value: mood.properties.Mood.number ?? 0,
-      }));
+      tracker.value = res.data.data.results
+        .slice(-30)
+        .map((dataByDay: any) => ({
+          date: dataByDay.properties.Date.date.start,
+          mood: dataByDay.properties.Mood.number ?? 0,
+          habit:
+            dataByDay.properties["Habit Progress"].formula.number * 10 ?? 0,
+        }));
     }
   });
 
 watch(
-  () => moods.value,
+  () => tracker.value,
   () => {
     chartData.value = computeChartData();
   }
