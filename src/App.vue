@@ -69,8 +69,8 @@ const computeChartData = (): iChartData => {
       },
       {
         label: "Habit",
-        backgroundColor: "#9d4edd",
-        borderColor: "#9d4edd",
+        backgroundColor: "#e29578",
+        borderColor: "#e29578",
         fill: true,
         data: tracker.value.map((data) => data.habit),
         tension: 0.32,
@@ -94,7 +94,9 @@ const chartData: Ref<iChartData> = ref(computeChartData());
 
 axiosInstance
   .post(
-    `?query=v1/databases/${import.meta.env.VITE_NOTION_DATABASE_WIP}/query`,
+    `${import.meta.env.DEV ? "" : "?query="}v1/databases/${
+      import.meta.env.VITE_NOTION_DATABASE_WIP
+    }/query`,
     {
       sorts: [
         {
@@ -106,14 +108,14 @@ axiosInstance
   )
   .then((res) => {
     if (res && res.data) {
-      tracker.value = res.data.data.results
-        .slice(-30)
-        .map((dataByDay: any) => ({
-          date: dataByDay.properties.Date.date.start,
-          mood: dataByDay.properties.Mood.number ?? 0,
-          habit:
-            dataByDay.properties["Habit Progress"].formula.number * 10 ?? 0,
-        }));
+      const data_ = import.meta.env.DEV
+        ? res.data.results
+        : res.data.data.results;
+      tracker.value = data_.slice(-30).map((dataByDay: any) => ({
+        date: dataByDay.properties.Date.date.start,
+        mood: dataByDay.properties.Mood.number ?? 0,
+        habit: dataByDay.properties["Habit Progress"].formula.number * 10 ?? 0,
+      }));
     }
   });
 
