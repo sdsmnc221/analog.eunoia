@@ -46,6 +46,7 @@ interface ChartData {
     backgroundColor?: string;
     borderColor?: string;
     fill?: boolean;
+    tension?: number;
   }[];
 }
 
@@ -61,6 +62,7 @@ const computeChartData = (): ChartData => {
         borderColor: "#57cc99",
         fill: true,
         data: moods.value.map((mood) => mood.value),
+        tension: 0.32,
       },
     ],
   };
@@ -93,7 +95,7 @@ axiosInstance
   )
   .then((res) => {
     if (res && res.data) {
-      moods.value = res.data.data.results.map((mood: any) => ({
+      moods.value = res.data.data.results.slice(-30).map((mood: any) => ({
         date: mood.properties.Date.date.start,
         value: mood.properties.Mood.number ?? 0,
       }));
@@ -104,7 +106,6 @@ watch(
   () => moods.value,
   () => {
     chartData.value = computeChartData();
-    console.log(chartData.value);
   }
 );
 </script>
