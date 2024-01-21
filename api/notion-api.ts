@@ -17,12 +17,13 @@ export default async function handler(
     const path = request.url?.replace(/^\/api\/notion-api/, "");
 
     // Make a request to the Notion API
-    const axiosResponse = await axios.get(`${notionApiBaseUrl}${path}`, {
+    const axiosResponse = await axios.post(`${notionApiBaseUrl}${path}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.VITE_NOTION_API_KEY}`,
         "Notion-Version": "2022-06-28",
       },
+      body: JSON.stringify(request.body),
     });
 
     // Extract relevant data from the Notion API response
