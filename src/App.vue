@@ -75,7 +75,7 @@ const chartData: Ref<ChartData> = ref(computeChartData());
 
 axiosInstance
   .post(
-    `?query=/v1/databases/${import.meta.env.VITE_NOTION_DATABASE_WIP}/query`,
+    `?query=v1/databases/${import.meta.env.VITE_NOTION_DATABASE_WIP}/query`,
     {
       sorts: [
         {
