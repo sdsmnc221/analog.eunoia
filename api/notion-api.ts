@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import axios from "axios";
+import fetch from "node-fetch";
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -10,14 +10,21 @@ export default async function handler(
   response: VercelResponse
 ) {
   try {
-    // Define the Notion API base URL
-    const notionApiBaseUrl = "https://api.notion.com";
+    // Extract the query parameter 'query' from the request URL
+    const query = request.query.query;
 
-    // Extract path from the request URL
-    const path = request.url?.replace(/^\/api\/notion-api/, "");
+    // Ensure the 'query' parameter is provided
+    if (!query) {
+      return response.status(400).json({ error: "Query parameter is missing" });
+    }
+
+    // Construct the Notion API endpoint using the query parameter
+    const notionApiBaseUrl = "https://api.notion.com";
+    const endpoint = `/${query}`;
 
     // Make a request to the Notion API
-    const axiosResponse = await axios.post(`${notionApiBaseUrl}${path}`, {
+    const fetchResponse = await fetch(`${notionApiBaseUrl}${endpoint}`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.VITE_NOTION_API_KEY}`,
@@ -26,11 +33,18 @@ export default async function handler(
       body: JSON.stringify(request.body),
     });
 
+    const data = await fetchResponse.json();
+
     // Extract relevant data from the Notion API response
-    const data = axiosResponse.data;
+    // const data = axiosResponse.data;
 
     // Return the data in the response
-    return response.status(200).json(data);
+    return response.status(200).json({
+      url: `${notionApiBaseUrl}${endpoint}`,
+      key: process.env.VITE_NOTION_API_KEY,
+      body: request.body,
+      data,
+    });
   } catch (error) {
     console.error("Error:", error);
     return response.status(502).json({ error: "Bad Gateway" });

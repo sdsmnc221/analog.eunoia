@@ -74,14 +74,17 @@ const chartOptions = {
 const chartData: Ref<ChartData> = ref(computeChartData());
 
 axiosInstance
-  .post(`/v1/databases/${import.meta.env.VITE_NOTION_DATABASE_WIP}/query`, {
-    sorts: [
-      {
-        property: "Date",
-        direction: "ascending",
-      },
-    ],
-  })
+  .post(
+    `?query=/v1/databases/${import.meta.env.VITE_NOTION_DATABASE_WIP}/query`,
+    {
+      sorts: [
+        {
+          property: "Date",
+          direction: "ascending",
+        },
+      ],
+    }
+  )
   .then((res: any) => {
     if (res && res.data && res.data.results) {
       moods.value = res.data.results.map((mood: any) => ({
