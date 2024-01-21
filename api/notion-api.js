@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.VITE_NOTION_API_KEY}`,
+        "Notion-Version": "2022-06-28",
       },
       data: req.method !== "GET" ? req.body : undefined,
     });
