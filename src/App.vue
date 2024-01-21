@@ -28,7 +28,7 @@ import "the-new-css-reset/css/reset.css";
 
 import axiosInstance from "./helpers/axiosInstance";
 
-import { Ref, ref, watch } from "vue";
+import { Ref, onMounted, ref, watch } from "vue";
 
 import {
   Chart as ChartJS,
@@ -158,6 +158,10 @@ const refreshData = () => {
       }
     });
 };
+
+onMounted(() => {
+  refreshData();
+});
 
 watch(
   () => tracker.value,
