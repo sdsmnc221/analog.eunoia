@@ -40,7 +40,13 @@ interface MoodTracker {
 
 interface ChartData {
   labels: string[];
-  datasets: { label: string; data: number[]; backgroundColor?: string }[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor?: string;
+    borderColor?: string;
+    fill?: boolean;
+  }[];
 }
 
 const moods: Ref<MoodTracker[]> = ref([]);
@@ -52,6 +58,8 @@ const computeChartData = (): ChartData => {
       {
         label: "Mood",
         backgroundColor: "#57cc99",
+        borderColor: "#57cc99",
+        fill: true,
         data: moods.value.map((mood) => mood.value),
       },
     ],
