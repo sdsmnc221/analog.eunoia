@@ -5,7 +5,7 @@ const axios = require("axios");
 module.exports = async (req, res) => {
   try {
     const apiEndpoint = "https://api.notion.com";
-    const path = req.url.replace(/^\/notion-api\//, "");
+    const path = req.params[0];
     const url = `${apiEndpoint}/${path}`;
 
     const response = await axios({
