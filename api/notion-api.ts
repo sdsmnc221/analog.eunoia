@@ -27,7 +27,7 @@ export default async function handler(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.VITE_NOTION_API_KEY}`,
+        Authorization: atob(request.headers.authorization),
         "Notion-Version": "2022-06-28",
       },
       body: JSON.stringify(request.body),
