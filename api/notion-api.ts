@@ -35,14 +35,8 @@ export default async function handler(
 
     const data = await fetchResponse.json();
 
-    // Extract relevant data from the Notion API response
-    // const data = axiosResponse.data;
-
     // Return the data in the response
     return response.status(200).json({
-      url: `${notionApiBaseUrl}${endpoint}`,
-      key: process.env.VITE_NOTION_API_KEY,
-      body: request.body,
       data,
     });
   } catch (error) {

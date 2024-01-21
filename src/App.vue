@@ -87,8 +87,8 @@ const res: any = await axiosInstance.post(
 
 console.log(res);
 
-if (res && res.data && res.data.results) {
-  moods.value = res.data.results.map((mood: any) => ({
+if (res && res.data && res.data.data && res.data.data.results) {
+  moods.value = res.data.data.results.map((mood: any) => ({
     date: mood.properties.Date.date.start,
     value: mood.properties.Mood.number ?? 0,
   }));
