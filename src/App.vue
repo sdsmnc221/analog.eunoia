@@ -149,7 +149,9 @@ const refreshData = () => {
         const data_ = import.meta.env.DEV
           ? res.data.results
           : res.data.data.results;
-        tracker.value = data_.slice(-30).map((dataByDay: any) => ({
+        const dataToProcess =
+          import.meta.env.VITE_LIMIT_30 === "true" ? data_.slice(-30) : data_;
+        tracker.value = dataToProcess.map((dataByDay: any) => ({
           date: dataByDay.properties.Date.date.start,
           mood: dataByDay.properties.Mood.number ?? 0,
           habit:
