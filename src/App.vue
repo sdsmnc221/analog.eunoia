@@ -142,6 +142,12 @@ const refreshData = () => {
             direction: "ascending",
           },
         ],
+        filter: {
+          property: "Date",
+          date: {
+            past_month: {},
+          },
+        },
       }
     )
     .then((res) => {
@@ -149,6 +155,8 @@ const refreshData = () => {
         const data_ = import.meta.env.DEV
           ? res.data.results
           : res.data.data.results;
+
+        // console.log(data_);
         const dataToProcess =
           import.meta.env.VITE_LIMIT_30 === "true" ? data_.slice(-30) : data_;
         tracker.value = dataToProcess.map((dataByDay: any) => ({
