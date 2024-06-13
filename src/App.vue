@@ -55,7 +55,6 @@ ChartJS.register(
 interface iVizTracker {
   date: string;
   mood: number;
-  habit: number;
 }
 
 interface iDataSet {
@@ -86,14 +85,7 @@ const computeChartData = (): iChartData => {
         data: tracker.value.map((data) => data.mood),
         tension: 0.32,
       },
-      {
-        label: "Habit",
-        backgroundColor: "#e29578",
-        borderColor: "#e29578",
-        fill: true,
-        data: tracker.value.map((data) => data.habit),
-        tension: 0.32,
-      },
+
     ],
   };
 };
@@ -162,8 +154,6 @@ const refreshData = () => {
         tracker.value = dataToProcess.map((dataByDay: any) => ({
           date: dataByDay.properties.Date.date.start,
           mood: dataByDay.properties.Mood.number ?? 0,
-          habit:
-            dataByDay.properties["Habit Progress"].formula.number * 10 ?? 0,
         }));
       }
     });
